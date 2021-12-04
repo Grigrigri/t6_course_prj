@@ -1,0 +1,67 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n%}
+
+
+{% block content%}
+          
+ <section class="py-5 container">
+
+    <div class="row py-lg-5">
+
+      <div class="col-lg-6 col-md-8 mx-auto">
+
+        <center><h1 class="fw-light">{{ object.name }}</h1></center>
+
+      </div>
+
+    </div>
+
+          <ul>
+            
+            <li style="list-style: none">
+              <span><b>{% trans 'About category ' %} «{{ object.name }}»:</b>
+                {{ object.description }}
+              </span>
+            </li>
+            
+          </ul>
+          
+    {% if object.content_category.all %}
+
+      <table class="table table-striped">
+          
+          <thead>
+          <tr>
+            <th scope="col">{% trans 'All posts category' %} «{{ object.name }}»:</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+            {% for content in object.content_category.all %}
+              <tr>
+                <td>
+                 <a href = "{{ content.get_absolute_url }}">{{ content }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+
+          </tbody>
+      </table>
+
+    {% else %}
+
+        <div>
+            <div class="text-muted">{% trans 'No posts' %}</div>
+        </div>
+        <br>
+
+    {% endif %}
+
+
+  </section>
+
+
+{% endblock content%}   

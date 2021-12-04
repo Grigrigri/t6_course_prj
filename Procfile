@@ -1,0 +1,1 @@
+web: gunicorn iT_django.wsgi --log-file -

@@ -1,0 +1,18 @@
+# Text backup files
+*.bak
+
+#Database
+*.sqlite3
+*.sqlite
+
+#Cache
+__pycache__
+
+#Git
+.git
+
+migrations
+
+#Logs
+logs 
+*.log 

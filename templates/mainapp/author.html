@@ -1,0 +1,69 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n %}
+
+
+{% block content%}
+
+  <section class="py-5 container">
+
+    <div class="row py-lg-5">
+
+      <div class="col-lg-6 col-md-8 mx-auto">
+
+        <center><h1 class="fw-light">{{ object.name }}</h1></center>
+
+      </div>
+
+    </div>
+
+    <div class="left-ads-display">
+      <div class="row">
+
+        <div class="col-md-4">
+          <img src="{{ object.photo.url }}" class="img-fluid" alt="">
+        </div>
+
+        <div class=" col-md-6">
+
+          <ul>
+            
+            <li style="list-style: none">
+              <span><b>{% trans 'Bio' %}:</b>
+                {{ object.description }}
+              </span>
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+      
+    <br>
+
+      <table class="table table-striped">
+          
+          <thead>
+          <tr>
+            <th scope="col">{% trans 'All mentions in posts' %}:</th>
+          </tr>
+          </thead>
+
+          <tbody>
+
+            {% for content in object.content_author.all %}
+              <tr>
+                <td>
+                  <a href = "{{ content.get_absolute_url }}">{{ content }}</a>
+                </td>
+              </tr>
+            {% endfor %}
+
+          </tbody>
+      </table>
+
+  </section>
+
+{% endblock content%}   

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+{% load static socialaccount posts_tags i18n%}
+<html>
+<head> 
+    
+    <title>Django Recommend.</title> 
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'js/script.js' %}">
+
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+
+</head>
+
+<body>
+
+  {% include 'blocks/header.html' %}
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">{% trans 'Recommend.' %}</h1>
+        <p class="lead text-muted">{% trans 'Recommendations for U' %}</p>
+
+        <form action = "{%  url 'search' %}" method = "get" class="d-flex">
+
+          <input class="form-control" type="search" placeholder="Search" name = "q">
+          &nbsp;
+          <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <main class="bg-light" >
+
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 190px;">
+   
+   {% include 'blocks/sidebar.html' %}
+   
+  </div>
+
+  <div class="d-flex flex-column p-3 bg-light container-fluid " style="width: auto;">
+
+    {% block content%}
+
+    {% endblock content%}
+
+    {% include 'blocks/about.html' %}
+
+    <hr>
+
+  {% include 'blocks/social_in.html' %}
+
+  </div>
+
+  </main>
+  
+  {% include 'blocks/footer.html' %}
+
+</body> 
+
+</html>

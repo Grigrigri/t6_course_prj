@@ -1,0 +1,112 @@
+ {% load i18n%}
+ <div class="container">
+  <main>
+
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+
+        <h4 class="mb-3"></h4>
+         <small class="text-muted">* - {% trans 'required' %}</small>
+        
+        <form class="needs-validation" action = "{% url 'add_comment' posts.id %}" method = "post">
+            {% csrf_token %}
+            <div class="row g-3">
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+                    
+                    <label for="contactname" class="form-label">{% trans 'Name' %} *</label>
+                    
+                    <input type="name" class="form-control" id="contactname" placeholder="name" name="name" required>
+                    
+                    <div class="invalid-feedback">
+                        {% trans 'Valid name is required.' %}
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+
+                    <label for="contactemail" class="form-label">{% trans 'Email' %} *</label>
+                    
+                    <input type="email" class="form-control" id="contactemail" placeholder="email" name="email">
+                    
+                    <div class="invalid-feedback">
+                        {% trans 'Valid email is required.' %}
+                    </div>
+
+                </div>
+
+                <div class="col-sm-12">
+
+                    <hr class="my-4">
+
+                    <label for="lastName" class="form-label">  {% trans 'Text' %} *</label>
+                     
+                    <textarea class="form-control" type = "text" id="contacttext" name="text" rows = "5" required>
+                    </textarea>
+
+                    <div class="invalid-feedback">
+                         {% trans 'Valid text is required.' %}
+                    </div>
+                   
+                    <hr class="my-4">
+                
+                </div>
+                
+                <div class="col-12">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">{% trans 'Send' %}</button>
+                    <hr class="my-4">
+                </div>
+            </div>
+        </form>
+     
+
+      <h4 class="mb-3">{% trans 'Comments' %}</h4>
+     
+    {% if posts.comments_set %}
+
+        <ul class="list-group mb-3">
+
+        {% for comment in posts.comments_set.all %}    
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+
+                <span class="text-muted">
+
+                    <svg class="bd-placeholder-img rounded-circle" width="50" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>{% trans 'Photo' %}</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">50x50</text></svg>
+
+                    &nbsp; 
+
+                    {{comment.name}}
+
+                </span>
+                      
+                <span class="text-muted">{{comment.date | date:"d.m.Y"}}</span>
+
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                    <small class="text-muted">{{comment.text}}</small>
+                </div>
+            </li>
+
+            <hr>
+
+        {% endfor %}  
+
+        </ul>
+
+    {% else %}
+    
+        <div class="text-muted">{% trans 'No comments' %}</div>
+
+        <br>
+
+    {% endif %}
+
+      </div>
+    </div>
+
+  </main>

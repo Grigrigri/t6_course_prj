@@ -1,0 +1,94 @@
+{% load static ratings posts_tags i18n%}
+
+
+    <h4 class="sear-head editContent">{% trans 'Languages' %}</h4>
+    
+    <form class="card p-2 d-flex" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}">
+        <select name="language">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option   value="{{ language.code }}"
+                    {% if language.code == LANGUAGE_CODE %}
+                        selected
+                    {% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+
+       &nbsp;
+        <button class="btn btn-primary" type="submit">{% trans 'Go' %}</button>
+    </form>
+
+
+<hr>
+
+<h4 class="sear-head editContent">{% trans 'Categories' %}</h4>
+{% get_categories as categories %}
+
+{% if categories %}
+
+    <div  action="{% url 'set_language' %}" method="post">
+        
+    <ol class="list-unstyled mb-0">
+        {% for category in categories %}
+        <li><a href = "{{category.get_absolute_url}}">{{category.name}}</a></li>
+        {%endfor%}
+    </ol>
+
+    </div>
+
+
+{% else %}
+
+    <div class="text-muted">{% trans 'No categories' %}</div>
+
+    <br>
+
+{% endif %}
+
+<hr>
+
+<h4 class="sear-head editContent">{% trans 'Genres' %}</h3>
+
+{% if view.get_genres %}
+
+<form class="card p-2 d-flex" action = "{% url 'filter' %}" method = "get">
+    {% for genre in view.get_genres %}
+    <div class="list-group mx-0">
+        <div class="d-flex gap-5 justify-content-center">
+
+            <label class="list-group-item d-flex gap-2">
+
+              <span>
+                <div class="col">
+                  <input class="form-check-input flex-shrink-0" type="checkbox" value="{{ genre.id }}" name = "genre">
+                </div>
+                <div class="col">
+                    {{genre.name}}
+                    <small class="d-block text-muted">{{genre.description  | truncatewords:3 }}</small>
+                 </div>
+              </span>
+
+            </label>
+            
+        </div>
+    </div>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
+</form>
+
+{% else %}
+
+    <div class="text-muted">{% trans 'No genres' %}</div>
+
+    <br>
+
+{% endif %}
+
+<hr>
+
+<hr>

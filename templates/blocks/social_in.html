@@ -1,0 +1,19 @@
+  {% load socialaccount i18n%}
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>{% trans 'Login via GitHub' %}</h2>
+          <p>{% trans 'Login via social network GitHub.' %}</p>
+          <a class="btn btn-outline-light" href="{% provider_login_url 'github' %}">{% trans 'via GitHub' %}</a>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>{% trans 'Login via Google' %}</h2>
+          <p>{% trans 'Login via social network Google.' %}</p>
+          <a class="btn btn-outline-secondary" href="{% provider_login_url 'google' %}">{% trans 'via Google' %}</a>
+        </div>
+      </div>
+    </div>

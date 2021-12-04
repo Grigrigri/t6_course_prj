@@ -1,0 +1,108 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n%}
+
+
+{% block content%}
+
+    <section class="py-5 container">
+
+      <div class="row py-lg-5">
+
+        <div class="col-lg-6 col-md-8 mx-auto">
+
+          <center><h1 class="fw-light">{{ object.title }}</h1><center>
+          <center><p class="lead text-muted">{{object.date | date:"d.m.Y"}}</p></center>
+
+        </div>
+
+      </div>
+
+      <div class="left-ads-display">
+        <div class="row">
+            <div class="col-md-4">
+            
+              <img src="{{ object.poster.url }}" class="img-fluid" alt="poster">
+
+            </div>
+
+            <div class="desc1-right col-md-6 pl-lg-4">
+
+              <center><h4 class="fw-light">{% trans 'Subject of discussion' %}</h4></center><br>
+
+              <ul>
+
+                <li style="list-style: none">
+                  <span><b>{% trans 'Category' %}:</b>
+                    {{ object.category }}
+                  </span>
+                </li>
+
+                <li style="list-style: none">
+                  <span><b>{% trans 'Country' %}:</b>
+                    {% for country in object.country.all %}  
+                      {{ country.name }}
+                    {% endfor %}
+                  </span>
+                </li>
+
+                <li style="list-style: none">
+                  <span><b>{% trans 'Author' %}:</b>
+                    {% for author in object.author.all %}
+                        <a href="{{ author.get_absolute_url }}">
+                            {{ author.name }}
+                        </a>
+                    {% endfor %}
+                  </span>
+                </li>
+                
+                <li style="list-style: none">
+                  <span><b>{% trans 'Genre' %}:</b>
+                    {% for genre in object.genre.all %}
+                        {{ genre.name }}
+                    {% endfor %}
+                  </span>
+                </li>
+
+
+                <li style="list-style: none">
+                  <span><b>{% trans 'Opinion of' %}:</b>    
+                    {{ object.user }}
+                  </span>
+                </li>
+
+                <li style="list-style: none">
+                  <span><b>{% trans 'Rating' %}:</b>
+                  <br>
+                  {% include 'blocks/rating_stars_lib.html' %}
+                  </span>
+                </li>
+              
+                <br>
+                
+              </ul>
+
+          </div>
+        </div>
+      </div>
+
+      <br><h4 class="fw-light">{% trans 'Opinion' %}</h4><br>
+
+      {{object.text | safe }}
+
+      <br>
+
+      <br><h4 class="fw-light">{% trans 'Images' %}</h4><br>
+
+      {% for image in object.postimages_set.all %}
+      
+      <img width = "auto" height = "150" src="{{ image.image.url }}" alt="{{ image.description }}">
+
+      {% endfor %}
+
+  </section>
+
+    {% include 'blocks/comments.html' %}
+
+{% endblock content%}   
