@@ -1,0 +1,221 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n%}
+
+
+{% block content%}
+
+    {% if user.is_authenticated %}
+
+        <center><h4 class="mb-3">{% trans 'Add posts' %}</h4></center>
+        
+        <form class="needs-validation" action = "{% url 'add_post' %}" method = "post">
+            {% csrf_token %}
+            <div class="row g-3">
+
+                <!-- ID and Mail for user, not post -->
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+                    
+                    <label for="contactname" class="form-label">{% trans 'ID' %} *</label>
+                    
+                    <input type="name" class="form-control" placeholder="{{user}}" readonly>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+
+                    <label for="contactemail" class="form-label">{% trans 'Email' %} *</label>
+                    
+                    <input type="email" class="form-control" placeholder="{{user.email}}" readonly>
+
+                </div>
+
+                <!-- iuser -->
+
+                <input type="hidden" class="form-control" id="" name=""  value="{{user.id}}" readonly>
+
+                <!-- title_ru -->
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+                    
+                    <label for="title_ru" class="form-label">{% trans 'Title ru' %} *</label>
+                    
+                    <input type="text" class="form-control" 
+                    id="title_ru" name="title_ru" required >
+                    
+                    <div class="invalid-feedback">
+                        {% trans 'Valid title is required.' %}
+                    </div>
+
+                    <hr class="my-4">
+
+                </div>
+
+                <!-- title_en -->
+
+                <div class="col-sm-6">
+                    <hr class="my-4">
+
+                    <label for="title_en" class="form-label">{% trans 'Title en' %} *</label>
+                    
+                    <input type="text" class="form-control" 
+                    id="title_en" name="title_en" required >
+                    
+                    <div class="invalid-feedback">
+                        {% trans 'Valid title is required.' %}
+                    </div>
+
+                    <hr class="my-4">
+
+                </div>
+
+                <!-- text_ru -->
+
+                <div class="col-sm-12">
+
+                    <label for="text_ru" class="form-label">  {% trans 'Text ru' %} *</label>
+                     
+                    <textarea class="form-control" type = "text" rows = "5"
+                    id="text_ru" name="text_ru" required></textarea>
+
+                    <div class="invalid-feedback">
+                         {% trans 'Valid text is required.' %}
+                    </div>
+                   
+                    <hr class="my-4">
+                
+                </div>
+
+                <!-- title_en -->
+
+                <div class="col-sm-12">
+
+                    <label for="text_en" class="form-label">  {% trans 'Text en' %} *</label>
+
+                    <textarea class="form-control" type = "text" rows = "5"
+                    id="text_en" name="text_en"  required></textarea>
+
+                    <div class="invalid-feedback">
+                         {% trans 'Valid text is required.' %}
+                    </div>
+                   
+                    <hr class="my-4">
+                
+                </div>
+
+                <!-- category -->
+
+                <div class="col-sm-3">
+                <label for="category" class="form-label">  {% trans 'Categories' %} *</label>
+                    <p><select class="form-control" size="5" multiple 
+                         id="category" name="category" required>
+                    
+                    {% get_categories as categories %}
+
+                    {% if categories %}
+
+                        {% for category in categories %}            
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {%endfor%}
+
+                    {% else %}
+                        <option value="no">No categories</option>
+                    {%endif%}
+
+                    </select></p>
+                </div>
+
+                <!-- country -->
+
+                <div class="col-sm-3">
+                <label for="country" class="form-label">  {% trans 'Countries' %} *</label>
+                    
+                    <p><select class="form-control" size="5" multiple 
+                        id="country" name="country" required>
+                    
+                    {% get_countries as countries %}
+
+                    {% if countries %}
+
+                        {% for country in countries %}            
+                            <option value="{{ country.id }}">{{ country.name }}</option>
+                        {%endfor%}
+
+                    {% else %}
+                        <option value="no">No countries</option>
+                    {%endif%}
+
+                    </select></p>   
+                </div>
+                
+                <!-- author -->
+
+                <div class="col-sm-3">
+                    <label for="author" class="form-label">  {% trans 'Authors' %} *</label>
+                    <p><select class="form-control" size="5" multiple 
+                        id="author" name="author" required>
+                    
+                    {% get_authors as authors %}
+
+                    {% if authors %}
+
+                        {% for author in authors %}            
+                            <option value="{{ author.id }}">{{ author.name }}</option>
+                        {%endfor%}
+
+                    {% else %}
+                        <option value="no">No authors</option>
+                    {%endif%}
+
+                    </select></p>
+                </div>
+                
+                <!-- genre -->
+
+                <div class="col-sm-3">
+                    <label for="genre" class="form-label">  {% trans 'Genres' %} *</label>
+                    <p><select class="form-control" size="5" multiple 
+                        id="genre" name="genre" required>
+                    
+                    {% get_genres as genres %}
+
+                    {% if genres %}
+
+                        {% for genre in genres %}            
+                            <option value="{{ genre.id }}">{{ genre.name }}</option>
+                        {%endfor%}
+
+                    {% else %}
+                        <option value="no">No genres</option>
+                    {%endif%}
+
+                    </select></p>
+                </div>
+
+                <!-- url -->
+
+                <div class="col-sm-12">
+
+                    <label for="contactemail" class="form-label">{% trans 'Url' %} *</label>
+                    
+                    <input type="text" class="form-control" placeholder="/your_unique_url" id="url" name="url" required >
+                    
+                    <div class="invalid-feedback">
+                        {% trans 'Valid url is required.' %}
+                    </div>
+                
+                    <hr class="my-4">
+
+                </div>
+
+            </div>
+        </form>
+
+    {% endif %}     
+
+{% endblock content%}   

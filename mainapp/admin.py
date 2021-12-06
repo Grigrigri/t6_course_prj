@@ -24,13 +24,13 @@ class CategoriesAdmin(TranslationAdmin):
 
 @admin.register(Comments)
 class CommentsAdmin(admin.ModelAdmin):
-	list_display = ("id", "name", "email", "post")
-	readonly_fields = ("name", "email",)
+	list_display = ("id", "iuser", "post")
+	readonly_fields = ("iuser",)
 
 class CommentsInline(admin.StackedInline):
 	model = Comments
 	extra = 1
-	readonly_fields = ("name", "email",)
+	readonly_fields = ("iuser", "post",)
 
 class PostImagesInline(admin.StackedInline):
 	model = PostImages
@@ -52,6 +52,16 @@ class PostsAdmin(TranslationAdmin):
 	save_on_top = True
 	save_as = True
 	list_editable = ("draft", )
+
+	def save_model(self, request, obj, form, change):
+	      if form.is_valid():
+	         if not request.user.is_superuser or not form.cleaned_data["iuser"]:
+	            obj.iuser = request.user
+	            obj.save()
+	         elif form.cleaned_data["iuser"]:
+	            obj.iuser = form.cleaned_data["iuser"]
+	            obj.save()
+
 
 	actions = ["publish", "unpublish"]
 	form = PostsAdminForm

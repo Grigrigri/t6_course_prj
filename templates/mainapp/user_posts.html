@@ -1,0 +1,67 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n%}
+
+
+{% block content%}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+      
+      <center><h4 class="fw-light">{% trans 'User posts' %}</h4></center><br>
+      
+
+      {% if object_list %}
+
+
+      <table class="table table-striped">
+          
+        <thead>
+
+        </thead>
+
+        <tbody>
+
+          {% for post in object_list %}
+            
+            {% if user == post.iuser %}
+
+                <tr>
+
+                    <td> <a href = "{{ post.get_absolute_url }}">{{ post.title }}</a> </td>
+
+                    <td> {{ post.date | date:"d.m.Y" }} </td>
+
+                    <td> {{ post.text | safe | truncatewords:5 }} </td>
+
+                    <td> <a href = "{{ post.get_absolute_url }}edit">{% trans 'Edit' %}</a> </td>
+
+                    <td> <a href = "{{ post.get_absolute_url }}delete">{% trans 'Delete' %} </a> </td>
+
+                </tr>
+
+            {% endif %}
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      {% else %}
+
+          <div class="text-muted">{% trans 'No posts' %}</div>
+
+          <br>
+
+      {% endif %}
+
+
+          {% include 'blocks/pagination.html' %}
+
+    </div>
+
+  </div>
+
+
+{% endblock content%} 

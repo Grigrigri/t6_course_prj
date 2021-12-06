@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     'mainapp',
 
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -98,7 +99,7 @@ WSGI_APPLICATION = 'iT_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': '',
         'NAME': '',
         'USER': '',
         'PASSWORD': '',

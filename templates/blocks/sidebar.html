@@ -1,6 +1,15 @@
 {% load static ratings posts_tags i18n%}
 
 
+    {% if user.is_authenticated %}
+    
+        <h4 class="sear-head editContent">{% trans 'Options' %}</h4>
+
+        {% include 'blocks/menu_left.html' %}
+    
+    
+    {% endif %}
+
     <h4 class="sear-head editContent">{% trans 'Languages' %}</h4>
     
     <form class="card p-2 d-flex" action="{% url 'set_language' %}" method="post">{% csrf_token %}
@@ -35,7 +44,7 @@
         
     <ol class="list-unstyled mb-0">
         {% for category in categories %}
-        <li><a href = "{{category.get_absolute_url}}">{{category.name}}</a></li>
+        <li class="nav-link px-2 "><a href = "{{category.get_absolute_url}}">{{category.name}}</a></li>
         {%endfor%}
     </ol>
 

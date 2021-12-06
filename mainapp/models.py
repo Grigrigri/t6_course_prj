@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Categories(models.Model):
@@ -61,7 +62,7 @@ class Posts(models.Model):
 	text = models.TextField("text", max_length = 5000)
 	poster = models.ImageField("poster", upload_to = "posters/")
 
-	user = models.CharField("user", max_length = 100)
+	iuser = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True, verbose_name="name", related_name = "content_user")
 
 	country = models.ManyToManyField(Countries, verbose_name = "country", related_name = "content_country")
 	author = models.ManyToManyField(Authors, verbose_name = "author", related_name = "content_author")
@@ -133,8 +134,7 @@ class PostRating(models.Model):
 		verbose_name_plural = "post_rating"
 
 class Comments(models.Model):
-	email = models.EmailField()
-	name = models.CharField("name", max_length = 100)
+	iuser = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True, verbose_name="iuser", related_name = "comments_user")
 	text = models.TextField("text", max_length = 1000)
 	date = models.DateField("date", default = date.today)
 	
@@ -143,7 +143,7 @@ class Comments(models.Model):
 	)
 
 	def __str__(self):
-		return f"{self.name} - {self.post}"
+		return f"{self.iuser} - {self.post}"
 
 	class Meta:
 		verbose_name = "comments"

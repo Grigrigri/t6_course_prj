@@ -1,0 +1,20 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load i18n %}
+
+
+{% block content%}
+
+  <div class="container">
+    <a name="about"></a>
+    <div class=" p-1">
+        <h1 class="mt-5">{% trans '404 - Not found' %}</h1>
+        <p class="lead">
+          {% trans 'U can' %}
+          <a href ="#search"> {% trans 'use the search.' %} <a/></p>
+    </div>
+
+  </div>
+
+{% endblock content%}   

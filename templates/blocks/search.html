@@ -1,0 +1,10 @@
+{% load static socialaccount posts_tags i18n%}
+
+<a name="search"></a>
+<form action = "{%  url 'search' %}" method = "get" class="d-flex">
+
+  <input class="form-control" type="search" placeholder="Search" name = "q">
+  &nbsp;
+  <button class="btn btn-primary" type="submit">{% trans 'Search' %}</button>
+
+</form>

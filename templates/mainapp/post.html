@@ -68,16 +68,18 @@
 
                 <li style="list-style: none">
                   <span><b>{% trans 'Opinion of' %}:</b>    
-                    {{ object.user }}
+                    {{ object.iuser }}
                   </span>
                 </li>
 
-                <li style="list-style: none">
-                  <span><b>{% trans 'Rating' %}:</b>
-                  <br>
-                  {% include 'blocks/rating_stars_lib.html' %}
-                  </span>
-                </li>
+                {% if user.is_authenticated %}
+                  <li style="list-style: none">
+                    <span><b>{% trans 'Rating' %}:</b>
+                    <br>
+                    {% include 'blocks/rating_stars_lib.html' %}
+                    </span>
+                  </li>
+                {% endif %}
               
                 <br>
                 
@@ -95,11 +97,15 @@
 
       <br><h4 class="fw-light">{% trans 'Images' %}</h4><br>
 
-      {% for image in object.postimages_set.all %}
-      
-      <img width = "auto" height = "150" src="{{ image.image.url }}" alt="{{ image.description }}">
+      {% if object.postimages_set %}
+        {% for image in object.postimages_set.all %}
+        
+        <img width = "auto" height = "150" src="{{ image.image.url }}" alt="{{ image.description }}">
 
-      {% endfor %}
+        {% endfor %}
+      {% else %}
+        <div class="text-muted">{% trans 'No images' %}</div>
+      {% endif %}
 
   </section>
 

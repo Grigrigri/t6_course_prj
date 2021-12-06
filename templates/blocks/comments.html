@@ -5,8 +5,10 @@
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
 
-        <h4 class="mb-3"></h4>
-         <small class="text-muted">* - {% trans 'required' %}</small>
+    {% if user.is_authenticated %}
+
+        <h4 class="mb-3">{% trans 'Form for comments' %}</h4>
+        <small class="text-muted">* - {% trans 'required' %}</small>
         
         <form class="needs-validation" action = "{% url 'add_comment' posts.id %}" method = "post">
             {% csrf_token %}
@@ -15,9 +17,9 @@
                 <div class="col-sm-6">
                     <hr class="my-4">
                     
-                    <label for="contactname" class="form-label">{% trans 'Name' %} *</label>
+                    <label for="contactname" class="form-label">{% trans 'ID' %} *</label>
                     
-                    <input type="name" class="form-control" id="contactname" placeholder="name" name="name" required>
+                    <input type="name" class="form-control" placeholder="{{user}}" readonly>
                     
                     <div class="invalid-feedback">
                         {% trans 'Valid name is required.' %}
@@ -30,7 +32,7 @@
 
                     <label for="contactemail" class="form-label">{% trans 'Email' %} *</label>
                     
-                    <input type="email" class="form-control" id="contactemail" placeholder="email" name="email">
+                    <input type="email" class="form-control" placeholder="{{user.email}}" readonly>
                     
                     <div class="invalid-feedback">
                         {% trans 'Valid email is required.' %}
@@ -38,14 +40,16 @@
 
                 </div>
 
+
+                <input type="hidden" class="form-control" id="contactname" name="iuser" placeholder="{{user}}" value="{{user.id}}" readonly>
+
                 <div class="col-sm-12">
 
                     <hr class="my-4">
 
                     <label for="lastName" class="form-label">  {% trans 'Text' %} *</label>
                      
-                    <textarea class="form-control" type = "text" id="contacttext" name="text" rows = "5" required>
-                    </textarea>
+                    <textarea class="form-control" type = "text" id="contacttext" name="text" rows = "5" required></textarea>
 
                     <div class="invalid-feedback">
                          {% trans 'Valid text is required.' %}
@@ -61,50 +65,64 @@
                 </div>
             </div>
         </form>
-     
 
-      <h4 class="mb-3">{% trans 'Comments' %}</h4>
-     
-    {% if posts.comments_set %}
 
-        <ul class="list-group mb-3">
+        <h4 class="mb-3">{% trans 'Comments' %}</h4>
 
-        {% for comment in posts.comments_set.all %}    
-            <li class="list-group-item d-flex justify-content-between lh-sm">
+            {% if posts.comments_set.all %}
 
-                <span class="text-muted">
+                <ul class="list-group mb-3">
 
-                    <svg class="bd-placeholder-img rounded-circle" width="50" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>{% trans 'Photo' %}</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">50x50</text></svg>
+                {% for comment in posts.comments_set.all %}    
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
 
-                    &nbsp; 
+                        <span class="text-muted">
 
-                    {{comment.name}}
+                            <svg class="bd-placeholder-img rounded-circle" width="50" height="50" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>{% trans 'Photo' %}</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">50x50</text></svg>
 
-                </span>
-                      
-                <span class="text-muted">{{comment.date | date:"d.m.Y"}}</span>
+                            &nbsp; 
 
-            </li>
+                            {{comment.iuser}}
 
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                    <small class="text-muted">{{comment.text}}</small>
-                </div>
-            </li>
+                        </span>
+                              
+                        <span class="text-muted">{{comment.date | date:"d.m.Y"}}</span>
 
-            <hr>
+                    </li>
 
-        {% endfor %}  
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <small class="text-muted">{{comment.text}}</small>
+                        </div>
+                    </li>
 
-        </ul>
+                    <hr>
+
+                {% endfor %}  
+
+                </ul>
+
+            {% else %}
+
+                <div class="text-muted">{% trans 'No comments' %}</div>
+
+                <hr>
+
+            {% endif %}
 
     {% else %}
-    
-        <div class="text-muted">{% trans 'No comments' %}</div>
 
-        <br>
+        <h4 class="mb-3">{% trans 'Comments' %}</h4>
+        <div class="container">
+            <div class=" p-1">
+                <a href = "/accounts/login">{% trans 'Login' %}</a> 
+                or 
+                <a href = "/accounts/signup"> {% trans 'Sign-up' %} </a> 
+                {% trans 'to leave a comment' %}
+            </div>
+        </div>
 
-    {% endif %}
+    {% endif %}     
 
       </div>
     </div>

@@ -9,9 +9,7 @@
 __pycache__
 
 #Git
-.git
-
-migrations
+.git/
 
 #Logs
 logs 

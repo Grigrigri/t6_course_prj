@@ -25,10 +25,9 @@
 
               <div class="card-body">
 
-                <center><b>{{ post.title }}, {{ post.user}} </b></center>
+                <center><b>{{ post.title }}, {{ post.iuser}} </b></center>
 
-                
-
+            
                 <br>
 
                 <p class="card-text">{{ post.text | safe | truncatewords:40 }}</p>
@@ -56,9 +55,6 @@
           </div>
 
         {% endfor %}
-
-
-
 
 {% else %}
 

@@ -1,0 +1,62 @@
+{% extends 'mainapp/base.html' %} 
+
+
+{% load posts_tags i18n%}
+
+
+{% block content%}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+      
+      <center><h4 class="fw-light">{% trans 'User comments' %}</h4></center><br>
+      
+
+      {% if object_list %}
+
+
+      <table class="table table-striped">
+          
+        <thead>
+
+        </thead>
+
+        <tbody>
+
+          {% for comment in object_list %}
+            
+            {% if user == comment.iuser %}
+
+                <tr>
+
+
+                    <td> <a href = "{{ comment.get_absolute_url }}">  {{comment.post}} </a></td>
+                    <td> {{comment.date}}</td>
+                    <td> {{comment.text | truncatewords:10}}</td>
+
+                </tr>
+
+            {% endif %}
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      {% else %}
+
+          <div class="text-muted">{% trans 'No posts' %}</div>
+
+          <br>
+
+      {% endif %}
+
+
+          {% include 'blocks/pagination.html' %}
+
+    </div>
+
+  </div>
+
+
+{% endblock content%} 
