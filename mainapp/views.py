@@ -107,7 +107,7 @@ class PostView(СriteriaFilter, DetailView):
         value = PostRating.objects.filter(post = self.kwargs['pk']).aggregate(Avg('star'))
         return value
 
-class PostAddView(СriteriaFilter, ListView):
+class PostAddView(СriteriaFilter, ListView): #CreateView
     model = Posts
     form_class = AddPostForm
     template_name = "mainapp/post_add.html"
@@ -132,7 +132,7 @@ def post_add(request):
 
             post.iuser = request.POST.get("iuser")
 
-            post.country.set(request.POST.get(**country)) 
+            post.country.set(request.POST.get('country')) 
 
             #post.country.set(Countries.objects.filter(id = request.POST.get("country"))) 
             post.author = request.POST.get("author")
